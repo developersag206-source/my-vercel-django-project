@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Contact | {{ site_content.site_name }}{% endblock %}
+
+{% block content %}
+<section class="contact-grid">
+    <article class="panel">
+        <span class="eyebrow">{{ site_content.contact_badge }}</span>
+        <h1>{{ site_content.contact_heading }}</h1>
+        <p class="muted">{{ site_content.contact_description }}</p>
+        <div class="note-card">
+            Call, email, or message the clinic if you need help choosing a remedy before placing an order.
+        </div>
+    </article>
+    <article class="panel">
+        <h3>Visit or reach us</h3>
+        <ul class="mini-list">
+            <li><span>Primary phone</span><span class="muted">{{ site_content.phone_number }}</span></li>
+            {% if site_content.secondary_phone %}
+                <li><span>Secondary phone</span><span class="muted">{{ site_content.secondary_phone }}</span></li>
+            {% endif %}
+            {% if site_content.whatsapp_number %}
+                <li><span>WhatsApp</span><span class="muted">{{ site_content.whatsapp_number }}</span></li>
+            {% endif %}
+            <li><span>Email</span><span class="muted">{{ site_content.contact_email }}</span></li>
+            <li><span>Hours</span><span class="muted">{{ site_content.business_hours }}</span></li>
+            <li><span>Address</span><span class="muted">{{ site_content.address }}</span></li>
+        </ul>
+    </article>
+</section>
+
+<section class="info-grid" style="margin-top: 24px;">
+    <article class="panel">
+        <h3>Before ordering</h3>
+        <p class="muted">Use this page when a patient wants product guidance, clinic timing confirmation, or help with stock availability.</p>
+    </article>
+    <article class="panel">
+        <h3>After ordering</h3>
+        <p class="muted">The clinic can use the saved customer details to follow up on delivery, payment, and order status.</p>
+    </article>
+    <article class="panel">
+        <h3>Social presence</h3>
+        <p class="muted">
+            {% if site_content.facebook_url or site_content.instagram_url %}
+                {% if site_content.facebook_url %}<a href="{{ site_content.facebook_url }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+                {% if site_content.facebook_url and site_content.instagram_url %} | {% endif %}
+                {% if site_content.instagram_url %}<a href="{{ site_content.instagram_url }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+            {% else %}
+                Social links can be added later from Django admin.
+            {% endif %}
+        </p>
+    </article>
+</section>
+{% endblock %}

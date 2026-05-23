@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: todomanager
+    runtime: python
+    plan: free
+    rootDir: todomanager
+    buildCommand: ./build.sh
+    startCommand: gunicorn todomanager.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_SSL_REQUIRE
+        value: true

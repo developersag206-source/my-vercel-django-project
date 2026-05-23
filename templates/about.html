@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}About | {{ site_content.site_name }}{% endblock %}
+
+{% block content %}
+<section class="split-grid">
+    <article class="split-card">
+        <span class="eyebrow">{{ site_content.about_badge }}</span>
+        <h1>{{ site_content.about_heading }}</h1>
+        <p class="muted">{{ site_content.about_description }}</p>
+        <div class="badge-row">
+            <span class="pill">Herbal care</span>
+            <span class="pill">Family wellness</span>
+            <span class="pill">Easy ordering</span>
+        </div>
+    </article>
+    <article class="split-card">
+        <h3>What makes this clinic website useful</h3>
+        <ul class="mini-list">
+            <li><span>Patient-first pages</span><span class="muted">Home, treatments, shop, and contact</span></li>
+            <li><span>Ordering support</span><span class="muted">Product detail, cart, and checkout</span></li>
+            <li><span>Clinic branding</span><span class="muted">Warm natural colors and calm layout</span></li>
+        </ul>
+    </article>
+</section>
+
+<section class="info-grid" style="margin-top: 24px;">
+    <article class="panel">
+        <h3>{{ site_content.vision_title }}</h3>
+        <p class="muted">{{ site_content.vision_text }}</p>
+    </article>
+    <article class="panel">
+        <h3>{{ site_content.offerings_title }}</h3>
+        <p class="muted">{{ site_content.offerings_text }}</p>
+    </article>
+    <article class="panel">
+        <h3>{{ site_content.focus_title }}</h3>
+        <p class="muted">{{ site_content.focus_text }}</p>
+    </article>
+</section>
+
+<section class="section-head">
+    <div>
+        <h2>Our care philosophy</h2>
+        <p class="muted">Natural support should feel trustworthy, clear, and approachable.</p>
+    </div>
+</section>
+
+<section class="feature-grid">
+    <article class="feature-card">
+        <h3>Respectful guidance</h3>
+        <p class="muted">Patients need simple explanations, not confusion. Every page is written to feel calm and clear.</p>
+    </article>
+    <article class="feature-card">
+        <h3>Useful product details</h3>
+        <p class="muted">Each remedy can have pricing, stock, category, and a short explanation before someone orders.</p>
+    </article>
+    <article class="feature-card">
+        <h3>Built for growth</h3>
+        <p class="muted">Your clinic can add more remedies and keep receiving orders through the same checkout flow.</p>
+    </article>
+</section>
+{% endblock %}

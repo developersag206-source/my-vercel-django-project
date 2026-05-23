@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} | {{ site_content.site_name }}{% endblock %}
+
+{% block content %}
+<section class="detail-layout">
+    <article class="panel">
+        <img class="detail-image" src="{{ product.image_url|default:'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1200&q=80' }}" alt="{{ product.name }}">
+    </article>
+    <article class="panel">
+        <span class="pill">{{ product.category }}</span>
+        <h1>{{ product.name }}</h1>
+        <p class="price">Rs. {{ product.price }}</p>
+        <p class="muted">{{ product.short_description }}</p>
+        <p>{{ product.description }}</p>
+        <div class="note-card" style="margin: 20px 0;">
+            {% if product.in_stock %}
+                In stock now: {{ product.stock }} units available for order.
+            {% else %}
+                This remedy is currently unavailable. Please check other categories or contact the clinic.
+            {% endif %}
+        </div>
+        <div class="inline-actions">
+            {% if product.in_stock %}
+                <form method="post" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next_url" value="{{ request.path }}">
+                    <button type="submit" class="btn btn-primary">Add to cart</button>
+                </form>
+            {% endif %}
+            <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to shop</a>
+            <a href="{% url 'contact' %}" class="btn btn-secondary">Need advice?</a>
+        </div>
+    </article>
+</section>
+
+{% if related_products %}
+<section>
+    <div class="section-head">
+        <div>
+            <h2>Related remedies</h2>
+            <p class="muted">More options from the same care category.</p>
+        </div>
+    </div>
+    <div class="product-grid">
+        {% for item in related_products %}
+            <article class="product-card">
+                <img src="{{ item.image_url|default:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80' }}" alt="{{ item.name }}">
+                <div class="product-meta">
+                    <span class="pill">{{ item.category }}</span>
+                    <p class="price">Rs. {{ item.price }}</p>
+                </div>
+                <h3>{{ item.name }}</h3>
+                <p class="muted">{{ item.short_description }}</p>
+                <a href="{% url 'product_detail' item.slug %}" class="btn btn-secondary">View product</a>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

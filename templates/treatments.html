@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Treatments | {{ site_content.site_name }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow">Clinic Treatments</span>
+        <h1>Natural treatment programs shaped around everyday patient needs.</h1>
+        <p class="muted">
+            This page gives your clinic a dedicated treatment overview so visitors understand the kind of
+            support you provide before they begin ordering remedies online.
+        </p>
+        <div class="hero-actions">
+            <a href="{% url 'product_list' %}" class="btn btn-primary">Shop remedies</a>
+            <a href="{% url 'contact' %}" class="btn btn-secondary">Ask a question</a>
+        </div>
+    </div>
+    <aside class="hero-aside">
+        <h3>Patient support areas</h3>
+        <p>From digestive discomfort to immunity support, your website now shows care programs alongside the online store.</p>
+        <div class="note-card" style="margin-top: 22px;">
+            Each treatment area can guide patients toward products that match their wellness needs.
+        </div>
+    </aside>
+</section>
+
+<section>
+    <div class="section-head">
+        <div>
+            <h2>Programs at a glance</h2>
+            <p class="muted">Clear service sections help visitors understand what your clinic focuses on.</p>
+        </div>
+    </div>
+    <div class="feature-grid">
+        {% for program in programs %}
+            <article class="feature-card">
+                <span class="pill">{{ program.focus }}</span>
+                <h3>{{ program.name }}</h3>
+                <p class="muted">{{ program.summary }}</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="split-grid" style="margin-top: 26px;">
+    <article class="split-card">
+        <h3>What patients can do next</h3>
+        <ul class="mini-list">
+            <li><span>Read clinic information</span><span class="muted">Build trust before ordering</span></li>
+            <li><span>Browse products</span><span class="muted">Open remedy detail pages</span></li>
+            <li><span>Complete checkout</span><span class="muted">Place a home-delivery order</span></li>
+        </ul>
+    </article>
+    <article class="split-card">
+        <h3>Why this page matters</h3>
+        <p class="muted">
+            A treatments page makes the website feel like a real clinic instead of only a store. It connects
+            wellness guidance with product ordering and strengthens the natural medical brand.
+        </p>
+    </article>
+</section>
+{% endblock %}

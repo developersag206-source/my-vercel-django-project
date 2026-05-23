@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout | {{ site_content.site_name }}{% endblock %}
+
+{% block content %}
+<section class="section-head">
+    <div>
+        <h2>Checkout</h2>
+        <p class="muted">Enter patient and delivery details to place the order.</p>
+    </div>
+</section>
+
+<section class="checkout-grid">
+    <article class="panel">
+        <h3>Delivery information</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="field-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p style="color: #9d3f3f; margin: 8px 0 0;">{{ field.errors|join:', ' }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Place clinic order</button>
+        </form>
+    </article>
+    <article class="panel">
+        <h3>Order summary</h3>
+        <ul class="mini-list">
+            {% for item in items %}
+                <li>
+                    <span>{{ item.product.name }} x {{ item.quantity }}</span>
+                    <strong>Rs. {{ item.line_total }}</strong>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="note-card" style="margin-top: 22px;">
+            Payment method and delivery details are saved with the order for your clinic team.
+        </div>
+        <div class="section-head" style="margin-top: 26px;">
+            <div>
+                <h3>Total payable</h3>
+                <p class="price">Rs. {{ cart_total }}</p>
+            </div>
+        </div>
+    </article>
+</section>
+{% endblock %}

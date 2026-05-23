@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site_content.site_name }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow">Al-Qadeem dawakhana(Al-Momin dawakhana)</span>
+        <h1>Gentle healing, herbal remedies, and easy online ordering.</h1>
+        <p class="muted">
+            Welcome to {{ site_content.site_name }}. Patients can learn about treatments,
+            explore trusted natural remedies, and place product orders in a calm 8-page clinic website.
+        </p>
+        <div class="hero-actions">
+            <a href="{% url 'product_list' %}" class="btn btn-primary">Order Remedies</a>
+            <a href="{% url 'treatments' %}" class="btn btn-secondary">View Treatments</a>
+        </div>
+        <div class="stats-grid">
+            <article class="stat-card">
+                <span class="stat-number">{{ product_count }}+</span>
+                <p class="muted">Clinic remedies and wellness products ready to order.</p>
+            </article>
+            <article class="stat-card">
+                <span class="stat-number">8</span>
+                <p class="muted">Patient-friendly pages covering care, products, and checkout.</p>
+            </article>
+            <article class="stat-card">
+                <span class="stat-number">6 Days</span>
+                <p class="muted">Weekly support for consultations, product guidance, and delivery help.</p>
+            </article>
+        </div>
+    </div>
+    <aside class="hero-aside">
+        <h3>Today at the clinic</h3>
+        <p>
+            Our team supports immunity, digestion, pain relief, skin concerns, and long-term wellness
+            with a more natural approach to daily care.
+        </p>
+        <div class="badge-row">
+            <span class="pill">Digestive Care</span>
+            <span class="pill">Women's Wellness</span>
+            <span class="pill">Pain Relief</span>
+        </div>
+        <div class="note-card" style="margin-top: 22px;">
+            Order flow: Browse products, open a remedy page, add to cart, and complete delivery details in checkout.
+        </div>
+    </aside>
+</section>
+
+<section>
+    <div class="section-head">
+        <div>
+            <h2>Popular clinic remedies</h2>
+            <p class="muted">Trusted items patients often begin with.</p>
+        </div>
+        <a href="{% url 'product_list' %}" class="btn btn-secondary">See full shop</a>
+    </div>
+    <div class="product-grid">
+        {% for product in featured_products %}
+            <article class="product-card">
+                <img src="{{ product.image_url|default:'https://images.unsplash.com/photo-1542840410-3092f99611a3?auto=format&fit=crop&w=900&q=80' }}" alt="{{ product.name }}">
+                <div class="product-meta">
+                    <span class="pill">{{ product.category }}</span>
+                    <p class="price">Rs. {{ product.price }}</p>
+                </div>
+                <h3>{{ product.name }}</h3>
+                <p class="muted">{{ product.short_description }}</p>
+                <div class="inline-actions">
+                    <a href="{% url 'product_detail' product.slug %}" class="btn btn-secondary">Details</a>
+                    <form method="post" action="{% url 'add_to_cart' product.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next_url" value="{% url 'homepage' %}">
+                        <button type="submit" class="btn btn-primary">Add to cart</button>
+                    </form>
+                </div>
+            </article>
+        {% empty %}
+            <article class="panel empty-state">
+                <h3>No products yet</h3>
+                <p class="muted">Run migrations and clinic sample remedies will appear automatically.</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section>
+    <div class="section-head">
+        <div>
+            <h2>Clinic treatment programs</h2>
+            <p class="muted">A few natural care areas we support for patients and families.</p>
+        </div>
+        <a href="{% url 'treatments' %}" class="btn btn-secondary">Open treatments page</a>
+    </div>
+    <div class="feature-grid">
+        {% for program in treatment_programs %}
+            <article class="feature-card">
+                <span class="pill">{{ program.focus }}</span>
+                <h3>{{ program.name }}</h3>
+                <p class="muted">{{ program.summary }}</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section>
+    <div class="section-head">
+        <div>
+            <h2>How ordering works</h2>
+            <p class="muted">A simple path from discovery to checkout.</p>
+        </div>
+    </div>
+    <div class="step-grid">
+        <article class="step-card">
+            <span class="eyebrow">Step 1</span>
+            <h3>Explore care options</h3>
+            <p class="muted">Read about the clinic, treatment focus areas, and recommended wellness support.</p>
+        </article>
+        <article class="step-card">
+            <span class="eyebrow">Step 2</span>
+            <h3>Choose your remedy</h3>
+            <p class="muted">Open the shop, filter products by category, and review product details with pricing.</p>
+        </article>
+        <article class="step-card">
+            <span class="eyebrow">Step 3</span>
+            <h3>Place your order</h3>
+            <p class="muted">Add items to the cart and complete checkout with address, phone, and payment choice.</p>
+        </article>
+    </div>
+</section>
+
+<section>
+    <div class="section-head">
+        <div>
+            <h2>New arrivals</h2>
+            <p class="muted">Fresh additions to the natural clinic collection.</p>
+        </div>
+    </div>
+    <div class="product-grid">
+        {% for product in latest_products %}
+            <article class="product-card">
+                <img src="{{ product.image_url|default:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80' }}" alt="{{ product.name }}">
+                <div class="product-meta">
+                    <span class="pill">{{ product.category }}</span>
+                    <p class="price">Rs. {{ product.price }}</p>
+                </div>
+                <h3>{{ product.name }}</h3>
+                <p class="muted">{{ product.short_description }}</p>
+                <a href="{% url 'product_detail' product.slug %}" class="btn btn-secondary">View product</a>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

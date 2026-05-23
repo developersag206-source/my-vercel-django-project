@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+    tasklistpage
+{% endblock title  %}
+
+
+
+{% block content %}
+<div class="container">
+<br>
+{% for message in messages %}
+  <div class="alert alert-info" role="alert">
+   {{ message }}
+{% endfor %}
+<form method="POST">
+  {% csrf_token %}
+  <div class="mb-3">
+    <input type="text" class="form-control" name="task" placeholder="New Task?">
+    </div>
+  <button type="submit" class="btn btn-primary">Add Task</button>
+</form>
+</br>
+   <table class="table table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">task name</th>
+            <th scope="col">status</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+    </tr>
+  </thead>
+   {% for task in all_tasks %}
+      {% if task.is_completed %}
+      <tr class="table-success">
+      <td>{{ task.id }} | {{ task.task }}</td>
+      <td>complete</td>
+      <td><a href="{% url 'edit_task' task.id %}">Edit</a></td>
+      <td><a href="{% url 'delete_task' task.id %}">Delete</a></td>
+    </tr>
+   {% else %}   
+      <tr>
+      <td>{{ task.id }} | {{ task.task }}</td>
+      <td>Not complete</td>
+      <td><a href="{% url 'edit_task' task.id %}">Edit</a></td>
+      <td><a href="{% url 'delete_task' task.id %}">Delete</a></td>
+    </tr>
+     
+     {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+   </div>
+{% endblock content %}
