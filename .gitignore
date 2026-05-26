@@ -8,3 +8,6 @@ venv/
 todo_env/
 staticfiles/
 .DS_Store
+todolist/Lib/
+todolist/Scripts/
+todolist/pyvenv.cfg

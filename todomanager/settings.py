@@ -12,6 +12,11 @@ def env_list(name, default=""):
     return [item.strip() for item in raw_value.split(",") if item.strip()]
 
 
+def add_unique(items, value):
+    if value and value not in items:
+        items.append(value)
+
+
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
     "dev-only-change-me-please-5f0b41f2df1649d9a8d6b665db96922f",
@@ -20,13 +25,23 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.environ.get("DEBUG", "0").lower() in {"1", "true", "yes", "on"}
 
 ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1")
-render_hostname = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-if render_hostname:
-    ALLOWED_HOSTS.append(render_hostname)
-
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")
-if render_hostname:
-    CSRF_TRUSTED_ORIGINS.append(f"https://{render_hostname}")
+
+production_hosts = [
+    "al-momindawakhana.store",
+    "www.al-momindawakhana.store",
+    "todomanager-production.up.railway.app",
+    ".up.railway.app",
+    os.environ.get("RENDER_EXTERNAL_HOSTNAME"),
+    os.environ.get("RAILWAY_PUBLIC_DOMAIN"),
+]
+
+for host in production_hosts:
+    add_unique(ALLOWED_HOSTS, host)
+    if host and not host.startswith("."):
+        add_unique(CSRF_TRUSTED_ORIGINS, f"https://{host}")
+
+add_unique(CSRF_TRUSTED_ORIGINS, "https://*.up.railway.app")
 
 
 INSTALLED_APPS = [
